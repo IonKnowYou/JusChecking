@@ -134,6 +134,83 @@ local function billstp()
 end
 
 
+-- Define the abbreviateNumber function
+local function abbreviateNumber(number)
+    if number >= 1e15 then
+        return string.format("%.1fQd", number / 1e15) -- Quadrillions
+    elseif number >= 1e12 then
+        return string.format("%.1fT", number / 1e12) -- Trillions
+    elseif number >= 1e9 then
+        return string.format("%.1fB", number / 1e9) -- Billions
+    elseif number >= 1e6 then
+        return string.format("%.1fM", number / 1e6) -- Millions
+    elseif number >= 1e3 then
+        return string.format("%.1fK", number / 1e3) -- Thousands
+    else
+        return tostring(number)
+    end
+end
+
+local function updateStatsAndBars()
+    while true do
+        local success, error = pcall(function()
+            local plr = game.Players.LocalPlayer
+            local playerId = plr.UserId
+            
+            -- Update stats
+            local StatsTextLabel = game.Players.LocalPlayer.PlayerGui.Main.MainFrame.Frames.Stats
+            local data = game:GetService("ReplicatedStorage").Datas:FindFirstChild(tostring(playerId))
+            
+            if data and StatsTextLabel then
+                local defenseValue = data.Defense.Value
+                local strengthValue = data.Strength.Value
+                local speedValue = data.Speed.Value
+                local energyValue = data.Energy.Value
+                
+                StatsTextLabel.Defense.Text = "Defense: " .. abbreviateNumber(defenseValue)
+                StatsTextLabel.Strength.Text = "Strength: " .. abbreviateNumber(strengthValue)
+                StatsTextLabel.Speed.Text = "Speed: " .. abbreviateNumber(speedValue)
+                StatsTextLabel.Energy.Text = "Energy: " .. abbreviateNumber(energyValue)
+            end
+            
+            -- Update bars
+            local energyTextLabel = game:GetService("Players").LocalPlayer.PlayerGui.Main.MainFrame.Bars.Energy.TextLabel
+            local healthTextLabel = game:GetService("Players").LocalPlayer.PlayerGui.Main.MainFrame.Bars.Health.TextLabel
+            
+            local function convertToPercentage(current, max)
+                if current and max and max ~= 0 then
+                    return math.floor((current / max) * 100) .. "%"
+                else
+                    return "0%"
+                end
+            end
+            
+            local energyText = energyTextLabel.Text
+            local currentEnergy = tonumber(string.match(energyText, "%d+"))
+            local maxEnergy = tonumber(string.match(energyText, "%d+$"))
+            if currentEnergy and maxEnergy then
+                energyTextLabel.Text = "ENERGY: " .. convertToPercentage(currentEnergy, maxEnergy)
+            end
+            
+            local healthText = healthTextLabel.Text
+            local currentHealth = tonumber(string.match(healthText, "%d+"))
+            local maxHealth = tonumber(string.match(healthText, "%d+$"))
+            if currentHealth and maxHealth then
+                healthTextLabel.Text = "HEALTH: " .. convertToPercentage(currentHealth, maxHealth)
+            end
+        end)
+        
+        if not success then
+            warn("Error in updateStatsAndBars function: " .. tostring(error))
+        end
+        
+        task.wait()
+    end
+end
+
+task.spawn(updateStatsAndBars)
+
+
 
 
 local function stats()
@@ -529,7 +606,3 @@ spawn(function()
         end)
     end
 end)
-
-
-
- 
