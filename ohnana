@@ -1,16 +1,5 @@
-repeat task.wait() until game:IsLoaded() 
 
 local function waitForConditions()
-    -- Wait for the LocalPlayer
-    repeat task.wait() until game:GetService("Players").LocalPlayer
-
-    -- Wait for the LocalPlayer's name
-    repeat task.wait() until game:GetService("Players").LocalPlayer.Name 
-
-
-    -- Wait for the game to be fully loaded
-    repeat task.wait() until game:IsLoaded() 
-
     -- Wait for the necessary ReplicatedStorage items
     game:GetService("ReplicatedStorage"):WaitForChild("Datas")
     game:GetService("ReplicatedStorage").Datas:WaitForChild(game:GetService("Players").LocalPlayer.UserId)
