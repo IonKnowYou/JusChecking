@@ -25,7 +25,8 @@ local character = player.Character or player.CharacterAdded:Wait()
 -- Wait for the "Stats" child to be added to the character
 local stats = character:WaitForChild("Stats")
 local data = game.ReplicatedStorage.Datas[userId]
-local events = game.ReplicatedStorage.Package.Events
+local events = game.ReplicatedStorage:WaitForChild("Package"):WaitForChild("Events")
+
 
 -- Your further logic here
 local playerHumanoid = character:WaitForChild("Humanoid")
@@ -253,8 +254,8 @@ local function stats()
         local function punch()
             while strength.Value < strengthMAx do
                 wait()
-                local args = { "Blacknwhite27", 1 }
-                game:GetService("ReplicatedStorage").Package.Events.p:FireServer(unpack(args))
+                local args = {[1] = "Blacknwhite27",[2] = 1}
+                game:GetService("ReplicatedStorage"):WaitForChild("Package"):WaitForChild("Events"):WaitForChild("p"):FireServer(unpack(args))
                 if strength.Value >= strengthMAx then
                     break
                 end
@@ -265,13 +266,8 @@ local function stats()
         local function l()
             while energy.Value< targetValue do
                 wait()
-                --KIBLAST
-                local args = {
-                    [1] = 1,
-                    [2] = true,
-                    [3] = CFrame.new(12, 12, 12)
-                }
-                game:GetService("ReplicatedStorage").Package.Events.kb:FireServer(unpack(args))
+                local args = {[1] = 1,[2] = true,[3] = CFrame.new(12, 12, 12)}
+                game:GetService("ReplicatedStorage"):WaitForChild("Package"):WaitForChild("Events"):WaitForChild("kb"):FireServer(unpack(args))
                 if  energy.Value >= targetValue then
                     break
                 end
@@ -282,8 +278,8 @@ local function stats()
         local function defend()
             while defense.Value < targetValue do
                 wait()
-                local args = { "Blacknwhite27" }
-                game:GetService("ReplicatedStorage").Package.Events.def:InvokeServer(unpack(args))
+                local args = {[1] = "Blacknwhite27"}
+                game:GetService("ReplicatedStorage"):WaitForChild("Package"):WaitForChild("Events"):WaitForChild("def"):InvokeServer(unpack(args))
                 if defense.Value >= targetValue then
                     break
                 end
@@ -295,8 +291,8 @@ local function stats()
             task.spawn(function()
                 while task.wait() do
                     pcall(function()
-                        local args = { "Blacknwhite27" }
-                        game:GetService("ReplicatedStorage").Package.Events.cha:InvokeServer(unpack(args))
+                        local args = {[1] = "Blacknwhite27"}
+                        game:GetService("ReplicatedStorage"):WaitForChild("Package"):WaitForChild("Events"):WaitForChild("cha"):InvokeServer(unpack(args))
                     end)
                 end
             end)
@@ -594,6 +590,9 @@ spawn(function()
                                         repeat task.wait(0.1)
                                             task.spawn(function()
                                                 punchRemote:FireServer('Blacknwhite27',1)
+                                                punchRemote:FireServer('Blacknwhite27',2)
+                                                punchRemote:FireServer('Blacknwhite27',3)
+                                                punchRemote:FireServer('Blacknwhite27',4)
                                             end)
                                         until  v == nil or v.Humanoid.Health <= 0 or plr.Character.Humanoid.Health <= 0
                                     end)
@@ -606,3 +605,4 @@ spawn(function()
         end)
     end
 end)
+
