@@ -152,6 +152,14 @@ local function abbreviateNumber(number)
     end
 end
 
+local function waitForGuiElement(parent, name)
+    local element = parent:FindFirstChild(name)
+    while not element do
+        element = parent:WaitForChild(name)
+        task.wait() -- Yield briefly to avoid busy-waiting
+    end
+    return element
+end
 
 local function updateStatsAndBars()
     while true do
@@ -159,9 +167,17 @@ local function updateStatsAndBars()
             local plr = game.Players.LocalPlayer
             local playerId = plr.UserId
             
+            -- Check if the PlayerGui and Main exist
+            local playerGui = plr:FindFirstChild("PlayerGui")
+            if not playerGui then
+                playerGui = plr:WaitForChild("PlayerGui")
+            end
+            
+            local mainFrame = waitForGuiElement(playerGui, "Main")
+            
             -- Update stats
-            local StatsTextLabel = game.Players.LocalPlayer.PlayerGui.Main.MainFrame.Frames.Stats
-            local zeniTextLabel = game:GetService("Players").LocalPlayer.PlayerGui.Main.MainFrame.Indicator.Zeni
+            local StatsTextLabel = waitForGuiElement(mainFrame, "MainFrame"):FindFirstChild("Frames"):FindFirstChild("Stats")
+            local zeniTextLabel = waitForGuiElement(mainFrame, "MainFrame"):FindFirstChild("Indicator"):FindFirstChild("Zeni")
             local data = game:GetService("ReplicatedStorage").Datas:FindFirstChild(tostring(playerId))
             
             if data and StatsTextLabel then
@@ -177,12 +193,16 @@ local function updateStatsAndBars()
                 StatsTextLabel.Energy.Text = "Energy: " .. abbreviateNumber(energyValue)
                 
                 -- Update Zeni
-                zeniTextLabel.Text = abbreviateNumber(zeniValue).." Zeni"
+                if zeniTextLabel then
+                    zeniTextLabel.Text = abbreviateNumber(zeniValue).." Zeni"
+                else
+                    warn("Zeni label not found")
+                end
             end
             
             -- Update bars
-            local energyTextLabel = game:GetService("Players").LocalPlayer.PlayerGui.Main.MainFrame.Bars.Energy.TextLabel
-            local healthTextLabel = game:GetService("Players").LocalPlayer.PlayerGui.Main.MainFrame.Bars.Health.TextLabel
+            local energyTextLabel = waitForGuiElement(mainFrame, "MainFrame"):FindFirstChild("Bars"):FindFirstChild("Energy"):FindFirstChild("TextLabel")
+            local healthTextLabel = waitForGuiElement(mainFrame, "MainFrame"):FindFirstChild("Bars"):FindFirstChild("Health"):FindFirstChild("TextLabel")
             
             local function convertToPercentage(current, max)
                 if current and max and max ~= 0 then
@@ -192,18 +212,26 @@ local function updateStatsAndBars()
                 end
             end
             
-            local energyText = energyTextLabel.Text
-            local currentEnergy = tonumber(string.match(energyText, "%d+"))
-            local maxEnergy = tonumber(string.match(energyText, "%d+$"))
-            if currentEnergy and maxEnergy then
-                energyTextLabel.Text = "ENERGY: " .. convertToPercentage(currentEnergy, maxEnergy)
+            if energyTextLabel then
+                local energyText = energyTextLabel.Text
+                local currentEnergy = tonumber(string.match(energyText, "%d+"))
+                local maxEnergy = tonumber(string.match(energyText, "%d+$"))
+                if currentEnergy and maxEnergy then
+                    energyTextLabel.Text = "ENERGY: " .. convertToPercentage(currentEnergy, maxEnergy)
+                end
+            else
+                warn("Energy TextLabel not found")
             end
             
-            local healthText = healthTextLabel.Text
-            local currentHealth = tonumber(string.match(healthText, "%d+"))
-            local maxHealth = tonumber(string.match(healthText, "%d+$"))
-            if currentHealth and maxHealth then
-                healthTextLabel.Text = "HEALTH: " .. convertToPercentage(currentHealth, maxHealth)
+            if healthTextLabel then
+                local healthText = healthTextLabel.Text
+                local currentHealth = tonumber(string.match(healthText, "%d+"))
+                local maxHealth = tonumber(string.match(healthText, "%d+$"))
+                if currentHealth and maxHealth then
+                    healthTextLabel.Text = "HEALTH: " .. convertToPercentage(currentHealth, maxHealth)
+                end
+            else
+                warn("Health TextLabel not found")
             end
         end)
         
@@ -216,7 +244,6 @@ local function updateStatsAndBars()
 end
 
 task.spawn(updateStatsAndBars)
-
 
 
 local function stats()
