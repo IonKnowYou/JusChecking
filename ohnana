@@ -161,6 +161,7 @@ local function updateStatsAndBars()
             
             -- Update stats
             local StatsTextLabel = game.Players.LocalPlayer.PlayerGui.Main.MainFrame.Frames.Stats
+            local zeniTextLabel = game:GetService("Players").LocalPlayer.PlayerGui.Main.MainFrame.Indicator.Zeni
             local data = game:GetService("ReplicatedStorage").Datas:FindFirstChild(tostring(playerId))
             
             if data and StatsTextLabel then
@@ -176,7 +177,6 @@ local function updateStatsAndBars()
                 StatsTextLabel.Energy.Text = "Energy: " .. abbreviateNumber(energyValue)
                 
                 -- Update Zeni
-                local zeniTextLabel = game:GetService("Players").LocalPlayer.PlayerGui.Main.MainFrame.Indicator.Zeni
                 zeniTextLabel.Text = abbreviateNumber(zeniValue).." Zeni"
             end
             
