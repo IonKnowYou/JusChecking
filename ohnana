@@ -138,19 +138,20 @@ end
 -- Define the abbreviateNumber function
 local function abbreviateNumber(number)
     if number >= 1e15 then
-        return string.format("%.1fQd", number / 1e15) -- Quadrillions
+        return string.format("%.2fQd", number / 1e15) -- Quadrillions
     elseif number >= 1e12 then
-        return string.format("%.1fT", number / 1e12) -- Trillions
+        return string.format("%.2fT", number / 1e12) -- Trillions
     elseif number >= 1e9 then
-        return string.format("%.1fB", number / 1e9) -- Billions
+        return string.format("%.2fB", number / 1e9) -- Billions
     elseif number >= 1e6 then
-        return string.format("%.1fM", number / 1e6) -- Millions
+        return string.format("%.2fM", number / 1e6) -- Millions
     elseif number >= 1e3 then
-        return string.format("%.1fK", number / 1e3) -- Thousands
+        return string.format("%.2fK", number / 1e3) -- Thousands
     else
         return tostring(number)
     end
 end
+
 
 local function updateStatsAndBars()
     while true do
@@ -167,11 +168,16 @@ local function updateStatsAndBars()
                 local strengthValue = data.Strength.Value
                 local speedValue = data.Speed.Value
                 local energyValue = data.Energy.Value
+                local zeniValue = data.Zeni.Value
                 
                 StatsTextLabel.Defense.Text = "Defense: " .. abbreviateNumber(defenseValue)
                 StatsTextLabel.Strength.Text = "Strength: " .. abbreviateNumber(strengthValue)
                 StatsTextLabel.Speed.Text = "Speed: " .. abbreviateNumber(speedValue)
                 StatsTextLabel.Energy.Text = "Energy: " .. abbreviateNumber(energyValue)
+                
+                -- Update Zeni
+                local zeniTextLabel = game:GetService("Players").LocalPlayer.PlayerGui.Main.MainFrame.Indicator.Zeni
+                zeniTextLabel.Text = abbreviateNumber(zeniValue).." Zeni"
             end
             
             -- Update bars
@@ -210,7 +216,6 @@ local function updateStatsAndBars()
 end
 
 task.spawn(updateStatsAndBars)
-
 
 
 
