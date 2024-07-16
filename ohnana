@@ -15,11 +15,11 @@ else
     warn("Error occurred:", err)
 end
 
-local chakraRemote = game:GetService("ReplicatedStorage").Package.Events.cha
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local player = game.Players.LocalPlayer
 local userId = player.UserId
+local targetted = game.Players.LocalPlayer.name
 -- Wait for the character to load
 local character = player.Character or player.CharacterAdded:Wait()
 -- Wait for the "Stats" child to be added to the character
@@ -336,7 +336,6 @@ end
 task.spawn(stats)
 
 
-
 game:service'Players'.LocalPlayer.Idled:connect(function()
     bb:CaptureController()bb:ClickButton2(Vector2.new())
 end)
@@ -348,7 +347,7 @@ local function combinedFunction()
     while true do
         task.wait()
         pcall(function()
-            -- Charge Functionality
+            -- Charge 
             local args = {[1] = "Blacknwhite27"}
             if replicatedStorage and replicatedStorage:FindFirstChild("Package") then
                 local package = replicatedStorage.Package
@@ -360,7 +359,7 @@ local function combinedFunction()
                 end
             end
 
-            -- Set Blocking Status Functionality
+            -- Set Blocking Status 
             local localPlayer = game.Players.LocalPlayer
             if localPlayer and localPlayer:FindFirstChild("Status") then
                 local status = localPlayer.Status
@@ -369,13 +368,13 @@ local function combinedFunction()
                 end
             end
 
-            -- Manage Workspace and Zoom Functionality
+            -- Manage Workspace and Zoom 
             if localPlayer then
                 localPlayer.CameraMaxZoomDistance = 100
                 localPlayer.CameraMinZoomDistance = 100
             end
 
-            -- Fly Functionality
+            -- Fly 
             localPlayer = game.Players.LocalPlayer
             local humanoidRootPart = game.Workspace.Living:WaitForChild(localPlayer.Name):WaitForChild("HumanoidRootPart")
             local bv = humanoidRootPart:WaitForChild("BodyVelocity")
@@ -387,7 +386,7 @@ local function combinedFunction()
                 bv.MaxForce = Vector3.new(100000, 100000, 100000)
             end
 
-            -- Rebirth Functionality
+            -- Rebirth 
             event:InvokeServer()
         end)
     end
@@ -397,9 +396,6 @@ task.spawn(combinedFunction)
 
 
 
-function target()
-    targetted = game.Players.LocalPlayer.name
-end
 
 
 function getCheckValue()
@@ -569,7 +565,6 @@ end
 
 local function quest()
     if game:GetService("ReplicatedStorage").Datas[player.UserId].Quest.Value ~= SelectedQuests then
-        player.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Others.NPCs[SelectedQuests].HumanoidRootPart.CFrame
         repeat
             task.wait()
             earthtp()
@@ -593,7 +588,7 @@ spawn(function()
                     for i, v in ipairs(game:GetService("Workspace").Living:GetChildren()) do
                         earthtp()
                         billstp()
-                        autoquest()	--inicia el farm
+                        autoquest()	
                         if v.Name:lower() == SelectedMobs:lower() and player.Character and player.Character:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                             quest()
                             task.spawn(function()
@@ -601,7 +596,7 @@ spawn(function()
                                 task.wait()
                                 pcall(function()plr.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,0,3)end)
                             until  v == nil or v.Humanoid.Health <= 0 or plr.Character.Humanoid.Health <= 0
-                        end)
+                            end)
                             repeat task.wait(0.1)
                                 if checkValue > 2100000 and game.Workspace.Living[game.Players.LocalPlayer.name].Stats.Ki.Value > 10000 then
                                 A_2 = "Blacknwhite27"
