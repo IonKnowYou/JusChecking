@@ -206,9 +206,9 @@ local function updateStatsAndBars()
             
             local function convertToPercentage(current, max)
                 if current and max and max ~= 0 then
-                    return math.floor((current / max) * 100) .. "%"
+                    return math.floor((current / max) * 100)
                 else
-                    return "0%"
+                    return 0
                 end
             end
             
@@ -217,7 +217,8 @@ local function updateStatsAndBars()
                 local currentEnergy = tonumber(string.match(energyText, "%d+"))
                 local maxEnergy = tonumber(string.match(energyText, "%d+$"))
                 if currentEnergy and maxEnergy then
-                    energyTextLabel.Text = "ENERGY: " .. convertToPercentage(currentEnergy, maxEnergy)
+                    local energyPercentage = convertToPercentage(currentEnergy, maxEnergy)
+                    energyTextLabel.Text = string.format("ENERGY: %d/%d%%", energyPercentage, 100)
                 end
             else
                 warn("Energy TextLabel not found")
@@ -228,7 +229,8 @@ local function updateStatsAndBars()
                 local currentHealth = tonumber(string.match(healthText, "%d+"))
                 local maxHealth = tonumber(string.match(healthText, "%d+$"))
                 if currentHealth and maxHealth then
-                    healthTextLabel.Text = "HEALTH: " .. convertToPercentage(currentHealth, maxHealth)
+                    local healthPercentage = convertToPercentage(currentHealth, maxHealth)
+                    healthTextLabel.Text = string.format("HEALTH: %d/%d%%", healthPercentage, 100)
                 end
             else
                 warn("Health TextLabel not found")
@@ -244,6 +246,7 @@ local function updateStatsAndBars()
 end
 
 task.spawn(updateStatsAndBars)
+
 
 
 local function stats()
@@ -578,9 +581,8 @@ local attacks2 = {"Super Dragon Fist", "God Slicer", "Spirit Barrage","Spirit Br
 
 
 spawn(function()
-    repeat task.wait() until game:IsLoaded() 
     while true do
-         wait()
+        wait()
         pcall(function()
             while true and wait() do
                 repeat task.wait() until game.Players.LocalPlayer.Status.SelectedTransformation.Value == game.Players.LocalPlayer.Status.Transformation.Value
