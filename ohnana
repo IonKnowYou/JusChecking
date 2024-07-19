@@ -565,13 +565,13 @@ local function autoquest(boolean)
                     SelectedMobs = SelectedQuests
                     return
                 end
-            elseif checkValue >= 1000000000 and checkValue < 3000000000  then
+            elseif checkValue >= 1000000000 and checkValue < 2000000000  then
                 if v.Humanoid.Health >0 and v.Name == "Wukong (LBSSJ4)" then
                     SelectedQuests = v.name
                     SelectedMobs = SelectedQuests
                     return
                 end
-            elseif checkValue >= 3000000000 and checkValue < 5000000000 then
+            elseif checkValue >= 2000000000 and checkValue < 5000000000 then
                 if v.Humanoid.Health >0 and v.Name == "Vekuta (LBSSJ4)" then
                     SelectedQuests = v.name
                     SelectedMobs = SelectedQuests
