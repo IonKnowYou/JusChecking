@@ -81,7 +81,7 @@ end
 game.Players.PlayerAdded:Connect(checkPlayers)
 game.Players.PlayerRemoving:Connect(checkPlayers)
 
-checkPlayers()
+task.spawn(checkPlayers)
 
 
 local HttpService = game:GetService("HttpService")
