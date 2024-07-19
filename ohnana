@@ -38,7 +38,55 @@ local hakaiRemote = game:GetService("ReplicatedStorage").Package.Events.Hak
 local checkValue;
 local bb= game:service'VirtualUser'
 
+
+local maxPlayers = 1
+
+-- The player instance
+local player = game.Players.LocalPlayer
+
+-- Webhook URL for player join events
+local joinWebhookUrl = "https://discord.com/api/webhooks/1094337231029809262/_ul15st1Flr1GbUiuWKy30ANJ7MOJnUmY_4enEkikAO-Ixiuc27VshwiPfXxJQ3jYxT0"
+
+-- Function to send a join webhook message
+local function sendJoinWebhook()
+    local data = {
+        ["content"] = "@everyone A player joined and was kicked due to exceeding the player limit.",
+        ["embeds"] = {
+            {
+                ["title"] = "**Player Kicked**",
+                ["description"] = "Username: " .. player.Name .. " was kicked due to exceeding the player limit.",
+                ["type"] = "rich",
+                ["color"] = tonumber(0xFF0000)
+            }
+        }
+    }
+    local newdata = game:GetService("HttpService"):JSONEncode(data)
+    local headers = {
+        ["content-type"] = "application/json"
+    }
+    local requestTable = {Url = joinWebhookUrl, Body = newdata, Method = "POST", Headers = headers}
+    local request = http_request or request or HttpPost or syn.request
+    request(requestTable)
+end
+
+-- Function to check the number of players in the game
+local function checkPlayers()
+    if #game.Players:GetPlayers() > maxPlayers then
+        sendJoinWebhook()
+        player:Kick("There are more than 1 players in the game.")
+    end
+end
+
+-- Connect to the PlayerAdded and PlayerRemoving events
+game.Players.PlayerAdded:Connect(checkPlayers)
+game.Players.PlayerRemoving:Connect(checkPlayers)
+
+checkPlayers()
+
+
 local HttpService = game:GetService("HttpService")
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local plr = Players.LocalPlayer
 
 -- Wait until LocalPlayer is not nil
@@ -94,6 +142,7 @@ local rebirth = dataNode:WaitForChild("Rebirth")
 rebirth.Changed:Connect(function()
     sendWebhook()
 end)
+
 
 --- earths teleport
 local function earthtp()
@@ -396,10 +445,6 @@ local function combinedFunction()
 end
 
 task.spawn(combinedFunction)
-
-
-
-
 
 function getCheckValue()
     data = game.ReplicatedStorage.Datas[game.Players.LocalPlayer.UserId]
