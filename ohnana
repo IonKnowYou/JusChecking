@@ -100,29 +100,26 @@ end)
 
 local function earthtp()
     task.spawn(function()
-        while true do 
-            task.wait()
-            if game.PlaceId == 3311165597 then
-                break
-            end
-            if game:GetService("ReplicatedStorage").Datas:FindFirstChild(tostring(player.UserId)).Defense.Value <= 200000000 then
-                local A_1 = "Earth"
-                local Event = game:GetService("ReplicatedStorage").Package.Events.TP
-                
-                local success, result = pcall(function()
-                    return Event:InvokeServer(A_1)
-                end)
-                
-                if success then
-                    if game.PlaceId == 3311165597 then
-                        break
-                    else
-                        wait(3)  -- Cooldown to avoid spamming
-                    end
-                else
-                    warn("Teleport failed: " .. tostring(result))
-                    wait(5)  -- Wait before retrying
+        local continue = true
+        while continue do 
+            task.wait(0.1)  -- Small delay to prevent high CPU usage
+            local success, result = pcall(function()
+                if game.PlaceId == 3311165597 then
+                    return "Already at Earth"
                 end
+                if game:GetService("ReplicatedStorage").Datas:FindFirstChild(tostring(player.UserId)).Defense.Value <= 200000000 then
+                    local A_1 = "Earth"
+                    local Event = game:GetService("ReplicatedStorage").Package.Events.TP
+                    Event:InvokeServer(A_1)
+                    task.wait(3)  -- Cooldown to avoid spamming
+                end
+            end)
+            
+            if success and result == "Already at Earth" then
+                continue = false
+            elseif not success then
+                warn("Teleport failed: " .. tostring(result))
+                task.wait(5)  -- Wait before retrying
             end
         end
     end)
@@ -130,34 +127,30 @@ end
 
 local function billstp()
     task.spawn(function()
-        while true do
-            task.wait()
-            if game.PlaceId == 5151400895 then
-                break
-            end
-            if game:GetService("ReplicatedStorage").Datas:FindFirstChild(tostring(player.UserId)).Defense.Value >= 207000000 then
-                local A_1 = "Vills Planet"
-                local Event = game:GetService("ReplicatedStorage").Package.Events.TP
-                
-                local success, result = pcall(function()
-                    return Event:InvokeServer(A_1)
-                end)
-                
-                if success then
-                    if game.PlaceId == 5151400895 then
-                        break
-                    else
-                        wait(3)  -- Cooldown to avoid spamming
-                    end
-                else
-                    warn("Teleport failed: " .. tostring(result))
-                    wait(5)  -- Wait before retrying
+        local continue = true
+        while continue do
+            task.wait(0.1)  -- Small delay to prevent high CPU usage
+            local success, result = pcall(function()
+                if game.PlaceId == 5151400895 then
+                    return "Already at Vills Planet"
                 end
+                if game:GetService("ReplicatedStorage").Datas:FindFirstChild(tostring(player.UserId)).Defense.Value >= 207000000 then
+                    local A_1 = "Vills Planet"
+                    local Event = game:GetService("ReplicatedStorage").Package.Events.TP
+                    Event:InvokeServer(A_1)
+                    task.wait(3)  -- Cooldown to avoid spamming
+                end
+            end)
+            
+            if success and result == "Already at Vills Planet" then
+                continue = false
+            elseif not success then
+                warn("Teleport failed: " .. tostring(result))
+                task.wait(5)  -- Wait before retrying
             end
         end
     end)
 end
-
 
 
 -- Define the abbreviateNumber function
