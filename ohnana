@@ -122,28 +122,16 @@ local function earthtp()
 end
 
 local function billstp()
-    task.spawn(function()
-        local continue = true
-        while continue do
-            task.wait(0.5)  -- Increased delay to prevent high CPU usage and excessive API requests
-            local success, result = pcall(function()
-                if game.PlaceId == 5151400895 then
-                    return "Already at Vills Planet"
-                end
-                local playerData = game:GetService("ReplicatedStorage").Datas:FindFirstChild(tostring(player.UserId))
-                if playerData and playerData.Defense.Value >= 207000000 then
-                    local A_1 = "Vills Planet"
-                    local Event = game:GetService("ReplicatedStorage").Package.Events.TP
-                    Event:InvokeServer(A_1)
-                    task.wait(3)  -- Cooldown to avoid spamming
-                end
-            end)
-            
-            if game.PlaceId == 5151400895 then
-                continue = false
-            elseif not success then
-                warn("Teleport failed: " .. tostring(result))
-                task.wait(5)  -- Wait before retrying
+    pcall(function()
+        local data = game.ReplicatedStorage.Datas[game.Players.LocalPlayer.UserId]
+        if data.Defense.Value >= 200000000 and game.placeId ~= 5151400895 then
+            if data.Zeni.Value >= 15000 then
+                local A_1 = "Vills Planet"
+                local Event = game:GetService("ReplicatedStorage").Package.Events.TP
+                Event:InvokeServer(A_1)
+                task.wait(3)
+                tp = true
+                return tp
             end
         end
     end)
