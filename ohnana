@@ -627,7 +627,7 @@ spawn(function()
                                         end
                                         spam = spam + 1
                                     end) 
-                                 until spam == 10 or v == nil or v.Humanoid.Health <= 0 or plr.Character.Humanoid.Health <= 0
+                                 until spam == 12 or v == nil or v.Humanoid.Health <= 0 or plr.Character.Humanoid.Health <= 0
                                 else
                                     task.spawn(function()
                                         repeat task.wait(0.1)
