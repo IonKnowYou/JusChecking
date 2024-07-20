@@ -386,29 +386,46 @@ end
 task.spawn(combinedFunction)
 
 function getCheckValue()
-    data = game.ReplicatedStorage.Datas[game.Players.LocalPlayer.UserId]
-    local a = data.Strength.Value
-    local b = data.Energy.Value
-    local c = data.Defense.Value
-    local d = data.Speed.Value
-   
-    local smallest = a 
-   
+    local player = game.Players.LocalPlayer
+    
+    -- Wait for LocalPlayer to be available
+    while not player do
+        wait()
+        player = game.Players.LocalPlayer
+    end
+
+    -- Wait for Datas to be available
+    local data = game.ReplicatedStorage:WaitForChild("Datas"):WaitForChild(tostring(player.UserId))
+
+    -- Wait for each individual property to be available
+    local strength = data:WaitForChild("Strength")
+    local energy = data:WaitForChild("Energy")
+    local defense = data:WaitForChild("Defense")
+    local speed = data:WaitForChild("Speed")
+
+    local a = strength.Value
+    local b = energy.Value
+    local c = defense.Value
+    local d = speed.Value
+
+    -- Find the smallest value
+    local smallest = a
+
     if b < smallest then
         smallest = b
     end
-   
+
     if c < smallest then
         smallest = c
     end
-   
+
     if d < smallest then
         smallest = d
     end
-   
-    checkValue = smallest
-    return checkValue
+
+    return smallest
 end
+
 
 checkValue = getCheckValue()
 
