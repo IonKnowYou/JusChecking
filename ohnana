@@ -613,7 +613,6 @@ spawn(function()
                                 pcall(function()plr.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,0,3)end)
                             until  v == nil or v.Humanoid.Health <= 0 or plr.Character.Humanoid.Health <= 0
                             end)
-                            if game.Players.LocalPlayer.Status.SelectedTransformation.Value == game.Players.LocalPlayer.Status.Transformation.Value then
                             repeat task.wait(0.1)
                                 if checkValue > 2100000 and game.Workspace.Living[game.Players.LocalPlayer.name].Stats.Ki.Value > 10000 then
                                 A_2 = "Blacknwhite27"
@@ -643,7 +642,6 @@ spawn(function()
                                 end
                             until v == nil or v.Humanoid.Health <= 0 or plr.Character.Humanoid.Health <= 0
                         end
-                    end
                     end
                 end
             end
