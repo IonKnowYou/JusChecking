@@ -99,42 +99,26 @@ end)
 
 
 local function earthtp()
-    local RebValue = ""
-    local rebirthOnJoin = game.ReplicatedStorage.Datas[game.Players.LocalPlayer.UserId].Rebirth.Value
-
-    task.spawn(function()
-        while true and task.wait() do
-            pcall(function()
-                local data = game.ReplicatedStorage.Datas[game.Players.LocalPlayer.UserId]
-                while true and task.wait() do
-                    game:GetService("ReplicatedStorage").Package.Events.reb:InvokeServer() -- reb
-                    RebValue = data.Rebirth.Value
-                    if rebirthOnJoin ~= RebValue then
-                        local A_1 = "Earth"
-                        local Event = game:GetService("ReplicatedStorage").Package.Events.TP
-                        Event:InvokeServer(A_1)
-                        task.wait(3)
-                    end
-                end
-            end)
-        end
-    end)
+    local data = game.ReplicatedStorage.Datas[game.Players.LocalPlayer.UserId]
+    if data.Defense.Value <= 200000000 and game.placeId == 5151400895 then
+        local A_1 = "Earth"
+        local Event = game:GetService("ReplicatedStorage").Package.Events.TP
+        Event:InvokeServer(A_1)
+        task.wait(3)
+    end
 end
 
+
 local function billstp()
-    pcall(function()
-        local data = game.ReplicatedStorage.Datas[game.Players.LocalPlayer.UserId]
-        if data.Defense.Value >= 200000000 and game.placeId ~= 5151400895 then
-            if data.Zeni.Value >= 15000 then
-                local A_1 = "Vills Planet"
-                local Event = game:GetService("ReplicatedStorage").Package.Events.TP
-                Event:InvokeServer(A_1)
-                task.wait(3)
-                tp = true
-                return tp
-            end
+    local data = game.ReplicatedStorage.Datas[game.Players.LocalPlayer.UserId]
+    if data.Defense.Value >= 200000000 and game.placeId ~= 5151400895 then
+        if data.Zeni.Value >= 15000 then
+            local A_1 = "Vills Planet"
+            local Event = game:GetService("ReplicatedStorage").Package.Events.TP
+            Event:InvokeServer(A_1)
+            task.wait(3)
         end
-    end)
+    end
 end
 
 
@@ -348,6 +332,7 @@ end)
 
 local function combinedFunction()
     local replicatedStorage = game:GetService("ReplicatedStorage")
+    local event = replicatedStorage:WaitForChild("Package"):WaitForChild("Events"):WaitForChild("reb")
 
     while true do
         task.wait()
@@ -390,6 +375,10 @@ local function combinedFunction()
                 bv.P = 1
                 bv.MaxForce = Vector3.new(100000, 100000, 100000)
             end
+
+            -- reb
+            event:InvokeServer()
+            
         end)
     end
 end
