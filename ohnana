@@ -101,7 +101,7 @@ end)
 local function earthtp()
     task.spawn(function()
         while true do 
-            wait(0.1)
+            task.wait()
             if game.PlaceId == 3311165597 then
                 break
             end
@@ -131,7 +131,7 @@ end
 local function billstp()
     task.spawn(function()
         while true do
-            wait(0.1)
+            task.wait()
             if game.PlaceId == 5151400895 then
                 break
             end
