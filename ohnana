@@ -106,7 +106,6 @@ local function earthtp()
                 break
             end
             if game:GetService("ReplicatedStorage").Datas:FindFirstChild(tostring(player.UserId)).Defense.Value <= 200000000 then
-                wait(1)
                 local A_1 = "Earth"
                 local Event = game:GetService("ReplicatedStorage").Package.Events.TP
                 
@@ -118,7 +117,7 @@ local function earthtp()
                     if game.PlaceId == 3311165597 then
                         break
                     else
-                        wait(5)  -- Cooldown to avoid spamming
+                        wait(3)  -- Cooldown to avoid spamming
                     end
                 else
                     warn("Teleport failed: " .. tostring(result))
@@ -137,7 +136,6 @@ local function billstp()
                 break
             end
             if game:GetService("ReplicatedStorage").Datas:FindFirstChild(tostring(player.UserId)).Defense.Value >= 207000000 then
-                wait(2)
                 local A_1 = "Vills Planet"
                 local Event = game:GetService("ReplicatedStorage").Package.Events.TP
                 
@@ -149,7 +147,7 @@ local function billstp()
                     if game.PlaceId == 5151400895 then
                         break
                     else
-                        wait(5)  -- Cooldown to avoid spamming
+                        wait(3)  -- Cooldown to avoid spamming
                     end
                 else
                     warn("Teleport failed: " .. tostring(result))
