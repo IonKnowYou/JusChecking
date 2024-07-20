@@ -38,52 +38,6 @@ local hakaiRemote = game:GetService("ReplicatedStorage").Package.Events.Hak
 local checkValue;
 local bb= game:service'VirtualUser'
 
-
-local maxPlayers = 1
-
--- The player instance
-local player = game.Players.LocalPlayer
-
--- Webhook URL for player join events
-local joinWebhookUrl = "https://discord.com/api/webhooks/1094337231029809262/_ul15st1Flr1GbUiuWKy30ANJ7MOJnUmY_4enEkikAO-Ixiuc27VshwiPfXxJQ3jYxT0"
-
--- Function to send a join webhook message
-local function sendJoinWebhook()
-    local data = {
-        ["content"] = "@everyone A player joined and was kicked due to exceeding the player limit.",
-        ["embeds"] = {
-            {
-                ["title"] = "**Player Kicked**",
-                ["description"] = "Username: " .. player.Name .. " was kicked due to exceeding the player limit.",
-                ["type"] = "rich",
-                ["color"] = tonumber(0xFF0000)
-            }
-        }
-    }
-    local newdata = game:GetService("HttpService"):JSONEncode(data)
-    local headers = {
-        ["content-type"] = "application/json"
-    }
-    local requestTable = {Url = joinWebhookUrl, Body = newdata, Method = "POST", Headers = headers}
-    local request = http_request or request or HttpPost or syn.request
-    request(requestTable)
-end
-
--- Function to check the number of players in the game
-local function checkPlayers()
-    if #game.Players:GetPlayers() > maxPlayers then
-        sendJoinWebhook()
-        player:Kick("There are more than 1 players in the game.")
-    end
-end
-
--- Connect to the PlayerAdded and PlayerRemoving events
-game.Players.PlayerAdded:Connect(checkPlayers)
-game.Players.PlayerRemoving:Connect(checkPlayers)
-
-task.spawn(checkPlayers)
-
-
 local HttpService = game:GetService("HttpService")
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -144,7 +98,6 @@ rebirth.Changed:Connect(function()
 end)
 
 
---- earths teleport
 local function earthtp()
     task.spawn(function()
         while true do 
@@ -152,13 +105,25 @@ local function earthtp()
             if game.PlaceId == 3311165597 then
                 break
             end
-            if game:GetService("ReplicatedStorage").Datas:FindFirstChild(tostring(plr.UserId)).Defense.Value <= 200000000 then
+            if game:GetService("ReplicatedStorage").Datas:FindFirstChild(tostring(player.UserId)).Defense.Value <= 200000000 then
                 wait(1)
                 local A_1 = "Earth"
                 local Event = game:GetService("ReplicatedStorage").Package.Events.TP
-                Event:InvokeServer(A_1)
-            elseif game.PlaceId == 3311165597 then
-                break
+                
+                local success, result = pcall(function()
+                    return Event:InvokeServer(A_1)
+                end)
+                
+                if success then
+                    if game.PlaceId == 3311165597 then
+                        break
+                    else
+                        wait(5)  -- Cooldown to avoid spamming
+                    end
+                else
+                    warn("Teleport failed: " .. tostring(result))
+                    wait(5)  -- Wait before retrying
+                end
             end
         end
     end)
@@ -171,17 +136,30 @@ local function billstp()
             if game.PlaceId == 5151400895 then
                 break
             end
-            if game:GetService("ReplicatedStorage").Datas:FindFirstChild(tostring(plr.UserId)).Defense.Value >= 207000000 then
+            if game:GetService("ReplicatedStorage").Datas:FindFirstChild(tostring(player.UserId)).Defense.Value >= 207000000 then
                 wait(2)
                 local A_1 = "Vills Planet"
                 local Event = game:GetService("ReplicatedStorage").Package.Events.TP
-                Event:InvokeServer(A_1)
-            elseif game.PlaceId == 5151400895 then
-                break
+                
+                local success, result = pcall(function()
+                    return Event:InvokeServer(A_1)
+                end)
+                
+                if success then
+                    if game.PlaceId == 5151400895 then
+                        break
+                    else
+                        wait(5)  -- Cooldown to avoid spamming
+                    end
+                else
+                    warn("Teleport failed: " .. tostring(result))
+                    wait(5)  -- Wait before retrying
+                end
             end
         end
     end)
 end
+
 
 
 -- Define the abbreviateNumber function
@@ -565,13 +543,13 @@ local function autoquest(boolean)
                     SelectedMobs = SelectedQuests
                     return
                 end
-            elseif checkValue >= 1000000000 and checkValue < 3000000000  then
+            elseif checkValue >= 1000000000 and checkValue < 2000000000  then
                 if v.Humanoid.Health >0 and v.Name == "Wukong (LBSSJ4)" then
                     SelectedQuests = v.name
                     SelectedMobs = SelectedQuests
                     return
                 end
-            elseif checkValue >= 3000000000 and checkValue < 5000000000 then
+            elseif checkValue >= 2000000000 and checkValue < 5000000000 then
                 if v.Humanoid.Health >0 and v.Name == "Vekuta (LBSSJ4)" then
                     SelectedQuests = v.name
                     SelectedMobs = SelectedQuests
@@ -658,7 +636,7 @@ spawn(function()
                                         end
                                         spam = spam + 1
                                     end) 
-                                 until spam == 15 or v == nil or v.Humanoid.Health <= 0 or plr.Character.Humanoid.Health <= 0
+                                 until spam == 10 or v == nil or v.Humanoid.Health <= 0 or plr.Character.Humanoid.Health <= 0
                                 else
                                     task.spawn(function()
                                         repeat task.wait(0.1)
