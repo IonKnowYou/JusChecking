@@ -102,12 +102,13 @@ local function earthtp()
     task.spawn(function()
         local continue = true
         while continue do 
-            task.wait(0.1)  -- Small delay to prevent high CPU usage
+            task.wait(0.5)  -- Increased delay to prevent high CPU usage and excessive API requests
             local success, result = pcall(function()
                 if game.PlaceId == 3311165597 then
                     return "Already at Earth"
                 end
-                if game:GetService("ReplicatedStorage").Datas:FindFirstChild(tostring(player.UserId)).Defense.Value <= 200000000 then
+                local playerData = game:GetService("ReplicatedStorage").Datas:FindFirstChild(tostring(player.UserId))
+                if playerData and playerData.Defense.Value <= 200000000 then
                     local A_1 = "Earth"
                     local Event = game:GetService("ReplicatedStorage").Package.Events.TP
                     Event:InvokeServer(A_1)
@@ -129,12 +130,13 @@ local function billstp()
     task.spawn(function()
         local continue = true
         while continue do
-            task.wait(0.1)  -- Small delay to prevent high CPU usage
+            task.wait(0.5)  -- Increased delay to prevent high CPU usage and excessive API requests
             local success, result = pcall(function()
                 if game.PlaceId == 5151400895 then
                     return "Already at Vills Planet"
                 end
-                if game:GetService("ReplicatedStorage").Datas:FindFirstChild(tostring(player.UserId)).Defense.Value >= 207000000 then
+                local playerData = game:GetService("ReplicatedStorage").Datas:FindFirstChild(tostring(player.UserId))
+                if playerData and playerData.Defense.Value >= 207000000 then
                     local A_1 = "Vills Planet"
                     local Event = game:GetService("ReplicatedStorage").Package.Events.TP
                     Event:InvokeServer(A_1)
