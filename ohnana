@@ -115,7 +115,7 @@ local function earthtp()
                 end
             end)
             
-            if success and result == "Already at Earth" then
+            if game.PlaceId == 3311165597 then
                 continue = false
             elseif not success then
                 warn("Teleport failed: " .. tostring(result))
@@ -142,7 +142,7 @@ local function billstp()
                 end
             end)
             
-            if success and result == "Already at Vills Planet" then
+            if game.PlaceId == 5151400895 then
                 continue = false
             elseif not success then
                 warn("Teleport failed: " .. tostring(result))
@@ -151,7 +151,6 @@ local function billstp()
         end
     end)
 end
-
 
 -- Define the abbreviateNumber function
 local function abbreviateNumber(number)
