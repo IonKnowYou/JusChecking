@@ -378,7 +378,7 @@ local function combinedFunction()
 
             -- reb
             event:InvokeServer()
-            
+
         end)
     end
 end
@@ -565,30 +565,28 @@ local attacks2 = {"Super Dragon Fist", "God Slicer", "Spirit Barrage","Spirit Br
 
 
 spawn(function()
-    while true do
-        wait()
-        pcall(function()
-            while true and wait() do
-                repeat task.wait() until game.Players.LocalPlayer.Status.SelectedTransformation.Value == game.Players.LocalPlayer.Status.Transformation.Value
-                if game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                    for i, v in ipairs(game:GetService("Workspace").Living:GetChildren()) do
-                        earthtp()
-                        billstp()
-                        autoquest()	
-                        if v.Name:lower() == SelectedMobs:lower() and player.Character and player.Character:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                            quest()
-                            task.spawn(function()
+    pcall(function()
+        while true and wait() do
+            repeat task.wait() until game.Players.LocalPlayer.Status.SelectedTransformation.Value == game.Players.LocalPlayer.Status.Transformation.Value
+            if game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                for i, v in ipairs(game:GetService("Workspace").Living:GetChildren()) do
+                    earthtp()
+                    billstp()
+                    autoquest()	
+                    if v.Name:lower() == SelectedMobs:lower() and player.Character and player.Character:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                        quest()
+                        task.spawn(function()
                             repeat
                                 task.wait()
                                 pcall(function()plr.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,0,3)end)
                             until  v == nil or v.Humanoid.Health <= 0 or plr.Character.Humanoid.Health <= 0
-                            end)
-                            repeat task.wait(0.1)
-                                if checkValue > 2100000 and game.Workspace.Living[game.Players.LocalPlayer.name].Stats.Ki.Value > 10000 then
+                        end)
+                        repeat task.wait(0.1)
+                            if checkValue > 2100000 and game.Workspace.Living[game.Players.LocalPlayer.name].Stats.Ki.Value > 10000 then
                                 A_2 = "Blacknwhite27"
-                                    local spam = 0
-                                    repeat task.wait(0.1)
-                                        task.spawn(function()
+                                local spam = 0
+                                repeat task.wait(0.1)
+                                    task.spawn(function()
                                         for _, A_1 in ipairs(attacks2) do
                                             task.spawn(function()
                                                 game:GetService("ReplicatedStorage").Package.Events.mel:InvokeServer( A_1, A_2)
@@ -597,25 +595,24 @@ spawn(function()
                                         end
                                         spam = spam + 1
                                     end) 
-                                 until spam == 10 or v == nil or v.Humanoid.Health <= 0 or plr.Character.Humanoid.Health <= 0
-                                else
-                                    task.spawn(function()
-                                        repeat task.wait(0.1)
-                                            task.spawn(function()
-                                                punchRemote:FireServer('Blacknwhite27',1)
-                                                punchRemote:FireServer('Blacknwhite27',2)
-                                                punchRemote:FireServer('Blacknwhite27',3)
-                                                punchRemote:FireServer('Blacknwhite27',4)
-                                            end)
-                                        until  v == nil or v.Humanoid.Health <= 0 or plr.Character.Humanoid.Health <= 0
-                                    end)
-                                end
-                            until v == nil or v.Humanoid.Health <= 0 or plr.Character.Humanoid.Health <= 0
-                        end
+                                until spam == 10 or v == nil or v.Humanoid.Health <= 0 or plr.Character.Humanoid.Health <= 0
+                            else
+                                task.spawn(function()
+                                    repeat task.wait(0.1)
+                                        task.spawn(function()
+                                            punchRemote:FireServer('Blacknwhite27',1)
+                                            punchRemote:FireServer('Blacknwhite27',2)
+                                            punchRemote:FireServer('Blacknwhite27',3)
+                                            punchRemote:FireServer('Blacknwhite27',4)
+                                        end)
+                                    until  v == nil or v.Humanoid.Health <= 0 or plr.Character.Humanoid.Health <= 0
+                                end)
+                            end
+                        until v == nil or v.Humanoid.Health <= 0 or plr.Character.Humanoid.Health <= 0
                     end
                 end
             end
-        end)
-    end
+        end
+    end)
 end)
 
