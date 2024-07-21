@@ -123,8 +123,6 @@ local function billstp()
     end
 end
 
-
--- Define the abbreviateNumber function
 local function abbreviateNumber(number)
     if number >= 1e15 then
         return string.format("%.2fQd", number / 1e15) -- Quadrillions
@@ -200,7 +198,6 @@ local function updateStatsAndBars()
                     return 0
                 end
             end
-            
             if energyTextLabel then
                 local energyText = energyTextLabel.Text
                 local currentEnergy = tonumber(string.match(energyText, "%d+"))
@@ -212,7 +209,6 @@ local function updateStatsAndBars()
             else
                 warn("Energy TextLabel not found")
             end
-            
             if healthTextLabel then
                 local healthText = healthTextLabel.Text
                 local currentHealth = tonumber(string.match(healthText, "%d+"))
@@ -225,18 +221,14 @@ local function updateStatsAndBars()
                 warn("Health TextLabel not found")
             end
         end)
-        
         if not success then
             warn("Error in updateStatsAndBars function: " .. tostring(error))
         end
-        
         task.wait()
     end
 end
 
 task.spawn(updateStatsAndBars)
-
-
 
 local function stats()
     local player = game.Players.LocalPlayer
@@ -327,7 +319,6 @@ end
 
 task.spawn(stats)
 
-
 game:service'Players'.LocalPlayer.Idled:connect(function()
     bb:CaptureController()bb:ClickButton2(Vector2.new())
 end)
@@ -384,8 +375,6 @@ local function combinedFunction()
         end)
     end
 end
-
-task.spawn(combinedFunction)
 
 function getCheckValue()
     local player = game.Players.LocalPlayer
@@ -480,13 +469,6 @@ local function form()
     end)
 end
 
-task.spawn(function()
-    while task.wait() do
-        pcall(form)
-    end
-end)
-
-
 local function autoquest(boolean)
     SelectedMobs = ""
     local a = data.Strength.Value
@@ -578,13 +560,15 @@ local function quest()
     end
 end
 
-local attacks2 = {"Super Dragon Fist", "God Slicer", "Spirit Barrage","Spirit Breaking Cannon","Flash Kick","Mach Kick", "Vanish Strike","Meteor Crash","Bone Crusher","Uppercut","Sledgehammer","Vital Strike","Wolf Fang Fist","High Power Rush","Meteor Strike","Meteor Charge"}
+local attacks2 = {"Super Dragon Fist", "God Slicer","Meteor Crash","Mach Kick","High Power Rush","Meteor Charge","Spirit Breaking Cannon","Flash Kick","Vanish Strike","Bone Crusher","Uppercut","Sledgehammer","Vital Strike","Wolf Fang Fist","Meteor Strike"}
 
 
 spawn(function()
     while true and task.wait() do
         pcall(function()
             while true and wait() do
+                form()
+                combinedFunction()
                 repeat task.wait() until game.Players.LocalPlayer.Status.SelectedTransformation.Value == game.Players.LocalPlayer.Status.Transformation.Value
                 if game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
                     for i, v in ipairs(game:GetService("Workspace").Living:GetChildren()) do
