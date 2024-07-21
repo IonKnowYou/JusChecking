@@ -581,8 +581,8 @@ spawn(function()
                         earthtp()
                         billstp()
                         autoquest()	
+                        quest()
                         if v.Name:lower() == SelectedMobs:lower() and player.Character and player.Character:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                            quest()
                             task.spawn(function()
                                 repeat
                                     task.wait()
