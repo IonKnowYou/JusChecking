@@ -569,8 +569,7 @@ local function quest()
     end
 end
 
-local attacks2 = {"High Power Rush","God Slicer","Meteor Crash","Mach Kick","Wolf Fang Fist","Spirit Breaking Cannon","Super Dragon Fist","Flash Kick","Vanish Strike","Bone Crusher","Uppercut","Sledgehammer","Vital Strike","Meteor Strike","Meteor Charge"}
-
+local attacks2 = {"Super Dragon Fist", "God Slicer","Spirit Breaking Cannon","Flash Kick","Mach Kick", "Vanish Strike","Meteor Crash","Bone Crusher","Uppercut","Sledgehammer","Vital Strike","Wolf Fang Fist", "High Power Rush","Meteor Strike", "Meteor Charge"}
 
 spawn(function()
     while true and task.wait() do
