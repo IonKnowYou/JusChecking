@@ -376,6 +376,8 @@ local function combinedFunction()
     end
 end
 
+task.spawn(combinedFunction)
+
 function getCheckValue()
     local player = game.Players.LocalPlayer
     
@@ -469,6 +471,13 @@ local function form()
     end)
 end
 
+task.spawn(function()
+    while task.wait() do
+        pcall(form)
+    end
+end)
+
+
 local function autoquest(boolean)
     SelectedMobs = ""
     local a = data.Strength.Value
@@ -560,15 +569,13 @@ local function quest()
     end
 end
 
-local attacks2 = {"Super Dragon Fist", "God Slicer","Meteor Crash","Mach Kick","High Power Rush","Meteor Charge","Spirit Breaking Cannon","Flash Kick","Vanish Strike","Bone Crusher","Uppercut","Sledgehammer","Vital Strike","Wolf Fang Fist","Meteor Strike"}
+local attacks2 = {"High Power Rush","God Slicer","Meteor Crash","Mach Kick","Wolf Fang Fist","Spirit Breaking Cannon","Super Dragon Fist","Flash Kick","Vanish Strike","Bone Crusher","Uppercut","Sledgehammer","Vital Strike","Meteor Strike","Meteor Charge"}
 
 
 spawn(function()
     while true and task.wait() do
         pcall(function()
             while true and wait() do
-                form()
-                combinedFunction()
                 repeat task.wait() until game.Players.LocalPlayer.Status.SelectedTransformation.Value == game.Players.LocalPlayer.Status.Transformation.Value
                 if game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
                     for i, v in ipairs(game:GetService("Workspace").Living:GetChildren()) do
