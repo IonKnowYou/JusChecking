@@ -104,6 +104,7 @@ local function earthtp()
         local A_1 = "Earth"
         local Event = game:GetService("ReplicatedStorage").Package.Events.TP
         Event:InvokeServer(A_1)
+        warn("Teleporting Earth...")
         task.wait(5)
     end
 end
@@ -116,6 +117,7 @@ local function billstp()
             local A_1 = "Vills Planet"
             local Event = game:GetService("ReplicatedStorage").Package.Events.TP
             Event:InvokeServer(A_1)
+            warn("Teleporting Vills...")
             task.wait(5)
         end
     end
