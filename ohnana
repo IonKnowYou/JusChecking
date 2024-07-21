@@ -264,7 +264,7 @@ local function stats()
     end
 
     local targetValue = statsRequerimiento.Value * 20
-    local strengthMAx = statsRequerimiento.Value * 100
+    local strengthMAx = statsRequerimiento.Value * 105
 
     if (a < treinkaK or b < treinkaK or c < treinkaK or d < treinkaK) then
         local function punch()
