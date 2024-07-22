@@ -1,7 +1,6 @@
 local function waitForConditions()
     -- Wait for the game to be fully loaded
     repeat task.wait() until game:IsLoaded() 
-
     -- Wait for the necessary ReplicatedStorage items
     game:GetService("ReplicatedStorage"):WaitForChild("Datas")
     game:GetService("ReplicatedStorage").Datas:WaitForChild(game:GetService("Players").LocalPlayer.UserId)
@@ -101,11 +100,12 @@ end)
 local function earthtp()
     local data = game.ReplicatedStorage.Datas[game.Players.LocalPlayer.UserId]
     if data.Defense.Value <= 200000000 and game.placeId == 5151400895 then
+        wait(1)
         local A_1 = "Earth"
         local Event = game:GetService("ReplicatedStorage").Package.Events.TP
         Event:InvokeServer(A_1)
         warn("Teleporting Earth...")
-        task.wait(5)
+        wait(5)
     end
 end
 
@@ -114,11 +114,12 @@ local function billstp()
     local data = game.ReplicatedStorage.Datas[game.Players.LocalPlayer.UserId]
     if data.Defense.Value >= 200000000 and game.placeId ~= 5151400895 then
         if data.Zeni.Value >= 15000 then
+            wait(1)
             local A_1 = "Vills Planet"
             local Event = game:GetService("ReplicatedStorage").Package.Events.TP
             Event:InvokeServer(A_1)
             warn("Teleporting Vills...")
-            task.wait(5)
+            wait(5)
         end
     end
 end
