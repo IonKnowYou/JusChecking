@@ -97,30 +97,52 @@ rebirth.Changed:Connect(function()
 end)
 
 
+
+local isTeleporting = false
 local function earthtp()
     local data = game.ReplicatedStorage.Datas[game.Players.LocalPlayer.UserId]
-    if data.Defense.Value <= 200000000 and game.placeId == 5151400895 then
-        wait(1)
+    if data.Defense.Value <= 200000000 and game.PlaceId == 5151400895 and not isTeleporting then
+        isTeleporting = true
         local A_1 = "Earth"
         local Event = game:GetService("ReplicatedStorage").Package.Events.TP
         Event:InvokeServer(A_1)
-        warn("Teleporting Earth...")
-        wait(5)
+        warn("Teleporting to Earth...")
+        -- Schedule a function to reset the teleport status after 5 seconds
+        task.delay(5, function()
+            isTeleporting = false
+        end)
     end
 end
 
+-- Connect the function to RunService.RenderStepped
+RunService.RenderStepped:Connect(function()
+    earthtp()
+end)
+
+
+
+local isTeleporting1 = false
 
 local function billstp()
     local data = game.ReplicatedStorage.Datas[game.Players.LocalPlayer.UserId]
-    if data.Defense.Value >= 200000000 and game.placeId ~= 5151400895 and data.Zeni.Value >= 15000 then
-        wait(1)
+    if data.Defense.Value >= 200000000 and game.PlaceId ~= 5151400895 and data.Zeni.Value >= 15000 and not isTeleporting1 then
+        isTeleporting1 = true
         local A_1 = "Vills Planet"
         local Event = game:GetService("ReplicatedStorage").Package.Events.TP
         Event:InvokeServer(A_1)
-        warn("Teleporting Vills...")
-        wait(5)
+        warn("Teleporting to Vills Planet...")
+        -- Schedule a function to reset the teleport status after 5 seconds
+        task.delay(5, function()
+            isTeleporting1 = false
+        end)
     end
 end
+
+-- Connect the function to RunService.RenderStepped
+RunService.RenderStepped:Connect(function()
+    billstp()
+end)
+
 
 local function abbreviateNumber(number)
     if number >= 1e15 then
@@ -583,8 +605,6 @@ spawn(function()
                 repeat task.wait() until game.Players.LocalPlayer.Status.SelectedTransformation.Value == game.Players.LocalPlayer.Status.Transformation.Value
                 if game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
                     for i, v in ipairs(game:GetService("Workspace").Living:GetChildren()) do
-                        earthtp()
-                        billstp()
                         autoquest()	
                         if v.Name:lower() == SelectedMobs:lower() and player.Character and player.Character:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                             quest()
