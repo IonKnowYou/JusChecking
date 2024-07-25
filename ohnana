@@ -43,10 +43,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local plr = Players.LocalPlayer
 
 -- Wait until LocalPlayer is not nil
-while not plr do
-    plr = Players.LocalPlayer
-    wait()
-end
+repeat task.wait() until plr ~= nil
 
 local webhookcheck = is_sirhurt_closure and "Sirhurt" or pebc_execute and "ProtoSmasher" or syn and "Synapse X" or secure_load and "Sentinel" or KRNL_LOADED and "Krnl" or SONA_LOADED and "Sona" or "other exploits"
 
@@ -91,7 +88,6 @@ local function sendWebhook()
 end
 
 local rebirth = dataNode:WaitForChild("Rebirth")
-
 rebirth.Changed:Connect(function()
     sendWebhook()
 end)
@@ -262,7 +258,7 @@ local function stats()
     end
 
     local targetValue = statsRequerimiento.Value * 20
-    local strengthMAx = statsRequerimiento.Value * 110
+    local strengthMAx = statsRequerimiento.Value * 120
 
     if (a < treinkaK or b < treinkaK or c < treinkaK or d < treinkaK) then
         local function punch()
