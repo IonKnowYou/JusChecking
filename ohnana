@@ -1,4 +1,3 @@
-
 local function waitForConditions()
     -- Wait for the game to be fully loaded
     repeat task.wait() until game:IsLoaded() 
@@ -522,13 +521,13 @@ local function autoquest(boolean)
                     SelectedMobs = SelectedQuests
                     return
                 end
-            elseif checkValue >= 7000000000 and checkValue < 20000000000 then
+            elseif checkValue >= 7000000000 and checkValue < 25000000000 then
                 if v.Humanoid.Health > 0 and v.Name == "Vekuta (SSJBUI)"then
                     SelectedQuests = v.name
                     SelectedMobs = SelectedQuests
                     return
                 end
-            elseif checkValue > 20000000000 then
+            elseif checkValue > 25000000000 then
                 if v.Humanoid.Health > 0 and v.Name == "Vekuta (SSJBUI)"then
                     SelectedQuests = v.name
                     SelectedMobs = SelectedQuests
