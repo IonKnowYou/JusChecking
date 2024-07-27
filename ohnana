@@ -106,6 +106,8 @@ local function teleport()
     end
 end
 
+spawn(teleport)
+
 local function abbreviateNumber(number)
     if number >= 1e15 then
         return string.format("%.2fQd", number / 1e15) -- Quadrillions
@@ -567,7 +569,6 @@ spawn(function()
                 repeat task.wait() until game.Players.LocalPlayer.Status.SelectedTransformation.Value == game.Players.LocalPlayer.Status.Transformation.Value
                 if game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
                     for i, v in ipairs(game:GetService("Workspace").Living:GetChildren()) do
-                        teleport()
                         autoquest()	
                         if v.Name:lower() == SelectedMobs:lower() and player.Character and player.Character:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                             quest()
