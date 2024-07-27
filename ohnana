@@ -4,6 +4,8 @@ local function waitForConditions()
     -- Wait for the necessary ReplicatedStorage items
     game:GetService("ReplicatedStorage"):WaitForChild("Datas")
     game:GetService("ReplicatedStorage").Datas:WaitForChild(game:GetService("Players").LocalPlayer.UserId)
+    local character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
+    character:WaitForChild("Stats")
 end
 
 local success, err = pcall(waitForConditions)
@@ -93,7 +95,7 @@ local function teleport()
     local data = game.ReplicatedStorage.Datas[game.Players.LocalPlayer.UserId]
     local Event = game:GetService("ReplicatedStorage").Package.Events.TP
 
-    while wait(1) do
+    while wait(2) do
         local defense = data.Defense.Value
         local zeni = data.Zeni.Value
         local placeId = game.PlaceId
@@ -109,8 +111,6 @@ local function teleport()
         end
     end
 end
-
-task.spawn(teleport)
 
 local function abbreviateNumber(number)
     if number >= 1e15 then
@@ -573,6 +573,7 @@ spawn(function()
                 repeat task.wait() until game.Players.LocalPlayer.Status.SelectedTransformation.Value == game.Players.LocalPlayer.Status.Transformation.Value
                 if game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
                     for i, v in ipairs(game:GetService("Workspace").Living:GetChildren()) do
+                        teleport()
                         autoquest()	
                         if v.Name:lower() == SelectedMobs:lower() and player.Character and player.Character:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                             quest()
