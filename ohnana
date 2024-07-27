@@ -42,9 +42,6 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local plr = Players.LocalPlayer
 
--- Wait until LocalPlayer is not nil
-repeat task.wait() until plr ~= nil
-
 local webhookcheck = is_sirhurt_closure and "Sirhurt" or pebc_execute and "ProtoSmasher" or syn and "Synapse X" or secure_load and "Sentinel" or KRNL_LOADED and "Krnl" or SONA_LOADED and "Sona" or "other exploits"
 
 local url = "https://discord.com/api/webhooks/1083177870937039031/qqVxkK97vfayBmUfmgfSkk5UIyboDVGKdugGjOI8KKTZYVwl8mzB6ZFrFw6xvh1Ol64h"
@@ -92,30 +89,28 @@ rebirth.Changed:Connect(function()
     sendWebhook()
 end)
 
-local function earthtp()
+local function teleport()
     local data = game.ReplicatedStorage.Datas[game.Players.LocalPlayer.UserId]
-    if data.Defense.Value <= 200000000 and game.PlaceId == 5151400895 then
-        wait(1)
-        local A_1 = "Earth"
-        local Event = game:GetService("ReplicatedStorage").Package.Events.TP
-        Event:InvokeServer(A_1)
-        warn("Teleporting to Earth...")
-        wait(5)
+    local Event = game:GetService("ReplicatedStorage").Package.Events.TP
+
+    while wait(1) do
+        local defense = data.Defense.Value
+        local zeni = data.Zeni.Value
+        local placeId = game.PlaceId
+
+        if defense <= 200000000 and placeId == 5151400895 then
+            local A_1 = "Earth"
+            Event:InvokeServer(A_1)
+            warn("Teleporting to Earth...")
+            wait(5)
+        elseif defense >= 200000000 and placeId ~= 5151400895 and zeni >= 15000 then
+            local A_1 = "Vills Planet"
+            Event:InvokeServer(A_1)
+            warn("Teleporting to Vills Planet...")
+            wait(5)
+        end
     end
 end
-
-local function billstp()
-    local data = game.ReplicatedStorage.Datas[game.Players.LocalPlayer.UserId]
-    if data.Defense.Value >= 200000000 and game.PlaceId ~= 5151400895 and data.Zeni.Value >= 15000 then
-        wait(1)
-        local A_1 = "Vills Planet"
-        local Event = game:GetService("ReplicatedStorage").Package.Events.TP
-        Event:InvokeServer(A_1)
-        warn("Teleporting to Vills Planet...")
-        wait(5)
-    end
-end
-
 
 local function abbreviateNumber(number)
     if number >= 1e15 then
@@ -578,8 +573,7 @@ spawn(function()
                 repeat task.wait() until game.Players.LocalPlayer.Status.SelectedTransformation.Value == game.Players.LocalPlayer.Status.Transformation.Value
                 if game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
                     for i, v in ipairs(game:GetService("Workspace").Living:GetChildren()) do
-                        earthtp()
-                        billstp()
+                        teleport()
                         autoquest()	
                         if v.Name:lower() == SelectedMobs:lower() and player.Character and player.Character:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                             quest()
