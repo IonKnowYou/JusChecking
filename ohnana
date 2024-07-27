@@ -1,4 +1,3 @@
-
 local function waitForConditions()
     -- Wait for the game to be fully loaded
     repeat task.wait() until game:IsLoaded() 
@@ -92,22 +91,16 @@ rebirth.Changed:Connect(function()
     sendWebhook()
 end)
 
-
-local data = game.ReplicatedStorage.Datas[game.Players.LocalPlayer.UserId]
-local Event = game:GetService("ReplicatedStorage").Package.Events.TP
-local defense = data.Defense.Value
-local zeni = data.Zeni.Value
-local placeId = game.PlaceId
-
 local function teleport()
+    local data = game.ReplicatedStorage.Datas[game.Players.LocalPlayer.UserId]
     while wait(2) do
-        if defense <= 200000000 and placeId == 5151400895 then
+        if data.Defense.Value <= 200000000 and game.PlaceId == 5151400895 then
             local A_1 = "Earth"
-            Event:InvokeServer(A_1)
+            game:GetService("ReplicatedStorage").Package.Events.TP:InvokeServer(A_1)
             warn("Teleporting to Earth...")
-        elseif defense >= 200000000 and placeId ~= 5151400895 and zeni >= 15000 then
+        elseif data.Defense.Value >= 200000000 and game.PlaceId ~= 5151400895 and data.Zeni.Value >= 15000 then
             local A_1 = "Vills Planet"
-            Event:InvokeServer(A_1)
+            game:GetService("ReplicatedStorage").Package.Events.TP:InvokeServer(A_1)
             warn("Teleporting to Vills Planet...")
         end
     end
