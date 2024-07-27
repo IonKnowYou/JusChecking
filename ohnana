@@ -93,26 +93,28 @@ end)
 
 local function earthtp()
     local data = game.ReplicatedStorage.Datas[game.Players.LocalPlayer.UserId]
-    while wait(2) do
-        if data.Defense.Value <= 200000000 and game.PlaceId == 5151400895 then
+    if data.Defense.Value <= 200000000 and game.PlaceId == 5151400895 then
+        repeat 
             local A_1 = "Earth"
             local Event = game:GetService("ReplicatedStorage").Package.Events.TP
             Event:InvokeServer(A_1)
             warn("Teleporting to Earth...")
-        end
+            wait(4)
+        until game.PlaceId ~= 5151400895 
     end
 end
 
 local function billstp()
     local data = game.ReplicatedStorage.Datas[game.Players.LocalPlayer.UserId]
-    while wait(2) do
-        if data.Defense.Value >= 200000000 and game.PlaceId ~= 5151400895 and data.Zeni.Value >= 15000 then
+    if data.Defense.Value >= 200000000 and game.PlaceId ~= 5151400895 and data.Zeni.Value >= 15000 then
+        repeat 
             local A_1 = "Vills Planet"
             local Event = game:GetService("ReplicatedStorage").Package.Events.TP
             Event:InvokeServer(A_1)
             warn("Teleporting to Vills Planet...")
-        end
-    end
+            wait(4)
+        until game.PlaceId == 5151400895
+     end
 end
 
 
