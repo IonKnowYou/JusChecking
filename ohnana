@@ -1,3 +1,4 @@
+
 local function waitForConditions()
     -- Wait for the game to be fully loaded
     repeat task.wait() until game:IsLoaded() 
@@ -102,12 +103,10 @@ local function teleport()
             local A_1 = "Earth"
             Event:InvokeServer(A_1)
             warn("Teleporting to Earth...")
-            wait(5)
         elseif defense >= 200000000 and placeId ~= 5151400895 and zeni >= 15000 then
             local A_1 = "Vills Planet"
             Event:InvokeServer(A_1)
             warn("Teleporting to Vills Planet...")
-            wait(5)
         end
     end
 end
