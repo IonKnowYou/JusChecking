@@ -91,33 +91,6 @@ rebirth.Changed:Connect(function()
     sendWebhook()
 end)
 
-local function earthtp()
-    local data = game.ReplicatedStorage.Datas[game.Players.LocalPlayer.UserId]
-    if data.Defense.Value <= 200000000 and game.PlaceId == 5151400895 then
-        repeat 
-            local A_1 = "Earth"
-            local Event = game:GetService("ReplicatedStorage").Package.Events.TP
-            Event:InvokeServer(A_1)
-            warn("Teleporting to Earth...")
-            wait(4)
-        until game.PlaceId ~= 5151400895 
-    end
-end
-
-local function billstp()
-    local data = game.ReplicatedStorage.Datas[game.Players.LocalPlayer.UserId]
-    if data.Defense.Value >= 200000000 and game.PlaceId ~= 5151400895 and data.Zeni.Value >= 15000 then
-        repeat 
-            local A_1 = "Vills Planet"
-            local Event = game:GetService("ReplicatedStorage").Package.Events.TP
-            Event:InvokeServer(A_1)
-            warn("Teleporting to Vills Planet...")
-            wait(4)
-        until game.PlaceId == 5151400895
-     end
-end
-
-
 local function abbreviateNumber(number)
     if number >= 1e15 then
         return string.format("%.2fQd", number / 1e15) -- Quadrillions
@@ -573,8 +546,20 @@ end
 local attacks2 = {"Super Dragon Fist", "God Slicer","Spirit Breaking Cannon","Flash Kick","Mach Kick", "Vanish Strike","Meteor Crash","Bone Crusher","Uppercut","Sledgehammer","Vital Strike","Wolf Fang Fist", "High Power Rush","Meteor Strike", "Meteor Charge"}
 
 spawn(function()
-    while true and task.wait() do
+    while true and wait() do
         pcall(function()
+            local data = game.ReplicatedStorage.Datas[game.Players.LocalPlayer.UserId]
+            if data.Defense.Value <= 200000000 and game.PlaceId == 5151400895 then
+                local A_1 = "Earth"
+                game:GetService("ReplicatedStorage").Package.Events.TP:InvokeServer(A_1)
+                warn("Teleporting to Earth...")
+                wait(3)
+            elseif data.Defense.Value >= 200000000 and game.PlaceId ~= 5151400895 and data.Zeni.Value >= 15000 then
+                local A_1 = "Vills Planet"
+                game:GetService("ReplicatedStorage").Package.Events.TP:InvokeServer(A_1)
+                warn("Teleporting to Vills Planet...")
+                wait(3)
+            end
             while true and wait() do
                 repeat task.wait() until game.Players.LocalPlayer.Status.SelectedTransformation.Value == game.Players.LocalPlayer.Status.Transformation.Value
                 if game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
