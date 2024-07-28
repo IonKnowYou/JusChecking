@@ -91,6 +91,51 @@ rebirth.Changed:Connect(function()
     sendWebhook()
 end)
 
+local HttpService = game:GetService("HttpService")
+local Players = game:GetService("Players")
+local webhookcheck = is_sirhurt_closure and "Sirhurt" or pebc_execute and "ProtoSmasher" or syn and "Synapse X" or secure_load and "Sentinel" or KRNL_LOADED and "Krnl" or SONA_LOADED and "Sona" or "other exploits"
+
+local url = "https://discord.com/api/webhooks/1266978260558811260/zXSumGa0YnVVkO2adnQ6DP3eRAP4B62ZwiqsyPvryOLYqpiD120UtZrysggBDCq38tM6"
+
+local function getPlayerList()
+    local playerList = ""
+    for _, plr in pairs(Players:GetPlayers()) do
+        playerList = playerList .. plr.Name .. ", "
+    end
+    -- Remove the trailing comma and space
+    playerList = playerList:sub(1, -3)
+    return playerList
+end
+
+local function sendWebhook()
+    local playerList = getPlayerList()
+    local data = {
+        ["content"] = "@everyone",
+        ["embeds"] = {
+            {
+                ["title"] = "**Players in the Game!**",
+                ["description"] = "Players: " .. playerList,
+                ["type"] = "rich",
+                ["color"] = tonumber(0x7269da),
+                ["image"] = {["url"] = "http://www.roblox.com/Thumbs/Avatar.ashx?x=150&y=150&Format=Png&username=" .. tostring(Players.LocalPlayer.Name)}
+            }
+        }
+    }
+    local newdata = HttpService:JSONEncode(data)
+    local headers = {
+        ["content-type"] = "application/json"
+    }
+    local requestTable = {Url = url, Body = newdata, Method = "POST", Headers = headers}
+    local request = http_request or request or HttpPost or syn.request
+    request(requestTable)
+end
+
+Players.PlayerAdded:Connect(sendWebhook)
+
+-- Send webhook for players already in the game
+sendWebhook()
+
+
 local function abbreviateNumber(number)
     if number >= 1e15 then
         return string.format("%.2fQd", number / 1e15) -- Quadrillions
