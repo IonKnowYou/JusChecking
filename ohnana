@@ -545,6 +545,10 @@ end
 
 local attacks2 = {"Super Dragon Fist", "God Slicer","Spirit Breaking Cannon","Flash Kick","Mach Kick", "Vanish Strike","Meteor Crash","Bone Crusher","Uppercut","Sledgehammer","Vital Strike","Wolf Fang Fist", "High Power Rush","Meteor Strike", "Meteor Charge"}
 
+local function isCharacterSpawned(player)
+    return player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+end
+
 spawn(function()
     while true do
         pcall(function()
@@ -560,6 +564,10 @@ spawn(function()
                 wait(3)
             end
 
+            repeat
+                task.wait()
+            until isCharacterSpawned(game.Players.LocalPlayer)
+            
             if game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
                     for i, v in ipairs(game:GetService("Workspace").Living:GetChildren()) do
                         autoquest()	
