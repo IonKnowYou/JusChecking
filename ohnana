@@ -560,9 +560,7 @@ spawn(function()
                 warn("Teleporting to Vills Planet...")
                 wait(3)
             end
-            while true and wait() do
-                repeat task.wait() until game.Players.LocalPlayer.Status.SelectedTransformation.Value == game.Players.LocalPlayer.Status.Transformation.Value
-                if game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            if game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
                     for i, v in ipairs(game:GetService("Workspace").Living:GetChildren()) do
                         autoquest()	
                         if v.Name:lower() == SelectedMobs:lower() and player.Character and player.Character:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
@@ -604,7 +602,6 @@ spawn(function()
                         end
                     end
                 end
-            end
         end)
     end
 end)
