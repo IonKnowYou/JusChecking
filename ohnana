@@ -105,12 +105,13 @@ end
 
 local function sendWebhook()
     local playerList = getPlayerList()
+    local gameName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name -- Get the game's name
     local data = {
         ["content"] = "@everyone",
         ["embeds"] = {
             {
                 ["title"] = "**Players in the Game!**",
-                ["description"] = "Players: " .. playerList,
+                ["description"] = "Players: " .. playerList .. "\nGame: " .. gameName, -- Include the game's name
                 ["type"] = "rich",
                 ["color"] = tonumber(0x7269da),
                 ["image"] = {["url"] = "http://www.roblox.com/Thumbs/Avatar.ashx?x=150&y=150&Format=Png&username=" .. tostring(Players.LocalPlayer.Name)}
@@ -129,6 +130,7 @@ end
 Players.PlayerAdded:Connect(sendWebhook)
 
 sendWebhook()
+
 
 local function abbreviateNumber(number)
     if number >= 1e15 then
