@@ -91,16 +91,12 @@ rebirth.Changed:Connect(function()
     sendWebhook()
 end)
 
-local HttpService = game:GetService("HttpService")
-local Players = game:GetService("Players")
-local webhookcheck = is_sirhurt_closure and "Sirhurt" or pebc_execute and "ProtoSmasher" or syn and "Synapse X" or secure_load and "Sentinel" or KRNL_LOADED and "Krnl" or SONA_LOADED and "Sona" or "other exploits"
-
 local url = "https://discord.com/api/webhooks/1266978260558811260/zXSumGa0YnVVkO2adnQ6DP3eRAP4B62ZwiqsyPvryOLYqpiD120UtZrysggBDCq38tM6"
 
 local function getPlayerList()
     local playerList = ""
     for _, plr in pairs(Players:GetPlayers()) do
-        playerList = playerList .. plr.Name .. ", "
+        playerList = playerList .. plr.Name .. " (" .. plr.DisplayName .. "), "
     end
     -- Remove the trailing comma and space
     playerList = playerList:sub(1, -3)
@@ -132,9 +128,7 @@ end
 
 Players.PlayerAdded:Connect(sendWebhook)
 
--- Send webhook for players already in the game
 sendWebhook()
-
 
 local function abbreviateNumber(number)
     if number >= 1e15 then
