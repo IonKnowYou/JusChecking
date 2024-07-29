@@ -588,15 +588,15 @@ local attacks2 = {"Super Dragon Fist", "God Slicer","Spirit Breaking Cannon","Fl
 spawn(function()
     while true do
         pcall(function()
-            if game.ReplicatedStorage.Datas[game.Players.LocalPlayer.UserId].Defense.Value <= 200000000 and game.PlaceId == 5151400895 then
-                local A_1 = "Earth"
-                game:GetService("ReplicatedStorage").Package.Events.TP:InvokeServer(A_1)
-                warn("Teleporting to Earth...")
-                wait(5)
-            elseif game.ReplicatedStorage.Datas[game.Players.LocalPlayer.UserId].Defense.Value >= 200000000 and game.PlaceId ~= 5151400895 and data.Zeni.Value >= 15000 then
+            if game.ReplicatedStorage.Datas[game.Players.LocalPlayer.UserId].Defense.Value >= 200000000 and game.PlaceId ~= 5151400895 and game.ReplicatedStorage.Datas[game.Players.LocalPlayer.UserId].Zeni.Value >= 15000 then
                 local A_1 = "Vills Planet"
                 game:GetService("ReplicatedStorage").Package.Events.TP:InvokeServer(A_1)
                 warn("Teleporting to Vills Planet...")
+                wait(5)
+            elseif game.ReplicatedStorage.Datas[game.Players.LocalPlayer.UserId].Defense.Value <= 200000000 and game.PlaceId == 5151400895 then
+                local A_1 = "Earth"
+                game:GetService("ReplicatedStorage").Package.Events.TP:InvokeServer(A_1)
+                warn("Teleporting to Earth...")
                 wait(5)
             end
             
