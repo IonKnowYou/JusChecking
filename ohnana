@@ -490,11 +490,6 @@ local function form()
     end)
 end
 
-task.spawn(function()
-    while task.wait() do
-        pcall(form)
-    end
-end)
 
 
 local function autoquest(boolean)
@@ -606,6 +601,7 @@ spawn(function()
             end
             
             if game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                form()
                 wait(2)
                     for i, v in ipairs(game:GetService("Workspace").Living:GetChildren()) do
                         autoquest()	
@@ -621,7 +617,7 @@ spawn(function()
                                 if checkValue > 2100000 and game.Workspace.Living[game.Players.LocalPlayer.name].Stats.Ki.Value > 10000 then
                                     A_2 = "Blacknwhite27"
                                     local spam = 0
-                                    repeat
+                                    repeat task.wait(0.1)
                                         task.spawn(function()
                                             for _, A_1 in ipairs(attacks2) do
                                                 task.spawn(function()
@@ -631,7 +627,6 @@ spawn(function()
                                             end
                                             spam = spam + 1
                                         end) 
-                                        task.wait(0.1)
                                     until spam == 10 or v == nil or v.Humanoid.Health <= 0 or plr.Character.Humanoid.Health <= 0
                                 else
                                     task.spawn(function()
