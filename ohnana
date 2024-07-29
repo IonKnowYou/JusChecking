@@ -357,9 +357,9 @@ local function combinedFunction()
 
             -- Set Blocking Status 
             local localPlayer = game.Players.LocalPlayer
-            if localPlayer and localPlayer:WaitForChild("Status") then
+            if localPlayer and localPlayer:FindFirstChild("Status") then
                 local status = localPlayer.Status
-                if status and status:WaitForChild("Blocking") then
+                if status and status:FindFirstChild("Blocking") then
                     status.Blocking.Value = true
                 end
             end
