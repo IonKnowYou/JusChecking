@@ -455,7 +455,7 @@ end
 
 local function safeStartGameEarth()
     pcall(function()
-        if game.PlaceId ~= 5151400895 and game.PlaceId == 5151400895 then
+        if game.PlaceId ~= 5151400895 then
             repeat
                 startgameearth()
             until game.Workspace:FindFirstChild("Living") and game.Workspace.Living:FindFirstChild(targetted)
