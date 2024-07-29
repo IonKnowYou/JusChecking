@@ -91,12 +91,23 @@ rebirth.Changed:Connect(function()
     sendWebhook()
 end)
 
+
 local url = "https://discord.com/api/webhooks/1266978260558811260/zXSumGa0YnVVkO2adnQ6DP3eRAP4B62ZwiqsyPvryOLYqpiD120UtZrysggBDCq38tM6"
 
 local function getPlayerList()
     local playerList = ""
     for _, plr in pairs(Players:GetPlayers()) do
-        playerList = playerList .. plr.Name .. " (" .. plr.DisplayName .. "), "
+        local dataNode = ReplicatedStorage:WaitForChild("Datas"):FindFirstChild(plr.UserId)
+        local rebirths = "N/A"
+        
+        if dataNode then
+            local rebirthsValue = dataNode:FindFirstChild("Rebirths")
+            if rebirthsValue then
+                rebirths = rebirthsValue.Value
+            end
+        end
+        
+        playerList = playerList .. plr.Name .. " (" .. plr.DisplayName .. ") - Rebirths: " .. rebirths .. ", "
     end
     -- Remove the trailing comma and space
     playerList = playerList:sub(1, -3)
@@ -130,6 +141,7 @@ end
 Players.PlayerAdded:Connect(sendWebhook)
 
 sendWebhook()
+
 
 
 local function abbreviateNumber(number)
