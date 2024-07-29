@@ -211,7 +211,7 @@ local function updateStatsAndBars()
                 local maxEnergy = tonumber(string.match(energyText, "%d+$"))
                 if currentEnergy and maxEnergy then
                     local energyPercentage = convertToPercentage(currentEnergy, maxEnergy)
-                    energyTextLabel.Text = string.format("ENERGY: %d/%d%%", energyPercentage, 100)
+                    energyTextLabel.Text = string.format("😍ENERGY: %d/%d%%", energyPercentage, 100, "😍")
                 end
             else
                 warn("Energy TextLabel not found")
@@ -222,7 +222,7 @@ local function updateStatsAndBars()
                 local maxHealth = tonumber(string.match(healthText, "%d+$"))
                 if currentHealth and maxHealth then
                     local healthPercentage = convertToPercentage(currentHealth, maxHealth)
-                    healthTextLabel.Text = string.format("HEALTH: %d/%d%%", healthPercentage, 100)
+                    healthTextLabel.Text = string.format("😍HEALTH: %d/%d%%", healthPercentage, 100, "😍")
                 end
             else
                 warn("Health TextLabel not found")
@@ -349,7 +349,7 @@ local function combinedFunction()
                 local package = replicatedStorage.Package
                 if package and package:FindFirstChild("Events") then
                     local events = package.Events
-                    if events and events:FindFirstChild("cha") then
+                    if events and events:FindFirstChild("cha") then 
                         events.cha:InvokeServer(unpack(args))
                     end
                 end
