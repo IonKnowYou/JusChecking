@@ -346,7 +346,6 @@ end)
 
 local function combinedFunction()
     local replicatedStorage = game:GetService("ReplicatedStorage")
-    local event = replicatedStorage:WaitForChild("Package"):WaitForChild("Events"):WaitForChild("reb")
 
     while true do
         task.wait()
@@ -389,9 +388,6 @@ local function combinedFunction()
                 bv.P = 1
                 bv.MaxForce = Vector3.new(100000, 100000, 100000)
             end
-
-            -- reb
-            event:InvokeServer()
 
         end)
     end
@@ -605,6 +601,8 @@ spawn(function()
                 warn("Teleporting to Earth...")
                 wait(5)
             end
+            -- reb
+            game:GetService("ReplicatedStorage"):WaitForChild("Package"):WaitForChild("Events"):WaitForChild("reb"):InvokeServer()
             
             if game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
                 wait(2)
