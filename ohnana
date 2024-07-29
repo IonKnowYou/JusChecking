@@ -490,7 +490,11 @@ local function form()
     end)
 end
 
-
+task.spawn(function()
+    while task.wait() do
+        pcall(form)
+    end
+end)
 
 local function autoquest(boolean)
     SelectedMobs = ""
@@ -601,8 +605,7 @@ spawn(function()
             end
             
             if game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                form()
-                wait(5)
+                wait(2)
                     for i, v in ipairs(game:GetService("Workspace").Living:GetChildren()) do
                         autoquest()	
                         if v.Name:lower() == SelectedMobs:lower() and player.Character and player.Character:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
