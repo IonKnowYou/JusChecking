@@ -605,7 +605,7 @@ spawn(function()
             game:GetService("ReplicatedStorage"):WaitForChild("Package"):WaitForChild("Events"):WaitForChild("reb"):InvokeServer()
             
             if game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                wait(3)
+                wait(6)
                     for i, v in ipairs(game:GetService("Workspace").Living:GetChildren()) do
                         autoquest()	
                         if v.Name:lower() == SelectedMobs:lower() and player.Character and player.Character:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
